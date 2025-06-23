@@ -10,23 +10,32 @@ body {
     height: 100vh;
 }
 
-/* Стиль для кнопок */
+/* Стиль для панели управления */
 .controls {
     padding: 10px;
     background-color: #2d2d2d;
     border-bottom: 1px solid #444;
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;       /* Выравниваем элементы по вертикали */
+    gap: 8px;                    /* Расстояние между кнопками */
+    flex-wrap: wrap;             /* Перенос на новую строку при нехватке места */
 }
 
+/* Кнопки */
 button {
     background-color: #007acc;
     color: white;
     border: none;
     padding: 8px 12px;
-    margin-right: 5px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    height: 32px;               /* Фиксированная высота для всех кнопок */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button:hover {
@@ -47,30 +56,6 @@ button:hover {
     line-height: 1.5;
     background-color: #1e1e1e;
     color: #dcdcdc;
-}
-
-.file-label {
-    display: inline-block;
-    background-color: #007acc;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    margin-right: 5px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    position: relative;
-    overflow: hidden;
-}
-
-.file-label input[type="file"] {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
 }
 
 /* Блок вывода внизу */

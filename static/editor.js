@@ -52,6 +52,11 @@ function download() {
     URL.revokeObjectURL(url);
 }
 
+function openFile() {
+    const fileInput = document.getElementById('fileInput');
+    fileInput.click();
+}
+
 document.getElementById('fileInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (!file) return;

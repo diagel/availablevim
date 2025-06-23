@@ -13,16 +13,11 @@
     <button onclick="load()">📂 Load from Server</button>
     <button onclick="run()">▶️ Run</button>
     <button onclick="download()">⬇️ Download</button>
-    <label class="file-label">
-        📁 Open File
-        <input type="file" id="fileInput" accept=".go,.txt">
-    </label>
+    <button onclick="openFile()">📁 Open File</button>
 </div>
 
-<!-- Редактор -->
 <textarea id="editor"></textarea>
 
-<!-- Блок вывода внизу -->
 <div class="output-container">
     <h3>Output:</h3>
     <pre id="output">Waiting for output...</pre>
