@@ -1,47 +1,64 @@
-const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
     lineNumbers: true,
     keyMap: "vim",
-    extensions: []
+    mode: "text/x-go"
 });
 
-// Сохранение на сервер
+const output = document.getElementById("output");
+
 function save() {
     const content = editor.getValue();
     fetch('/save', {
         method: 'POST',
-        body: content
-    }).then(() => alert("Файл сохранён на сервере"));
+        body: content,
+        headers: { 'Content-Type': 'text/plain' }
+    })
+        .then(res => res.text())
+        .then(() => alert('Saved to server'))
+        .catch(err => console.error(err));
 }
 
-// Загрузка с сервера
 function load() {
     fetch('/load')
         .then(res => res.text())
         .then(text => editor.setValue(text))
-        .catch(() => alert("Файл не найден"));
+        .catch(() => alert('File not found'));
 }
 
-// Скачивание файла
+function run() {
+    const code = editor.getValue();
+    fetch('/run', {
+        method: 'POST',
+        body: code,
+        headers: { 'Content-Type': 'text/plain' }
+    })
+        .then(res => res.text())
+        .then(data => {
+            output.textContent = data;
+        })
+        .catch(err => {
+            output.textContent = 'Error running code:\n' + err;
+        });
+}
+
 function download() {
     const content = editor.getValue();
-    const blob = new Blob([content], {type: "text/plain"});
+    const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
-    a.download = "my-file.txt";
+    a.download = 'main.go';
     a.click();
     URL.revokeObjectURL(url);
 }
 
-// Открытие файла с компьютера
-document.getElementById("fileInput").addEventListener("change", function(event) {
+document.getElementById('fileInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
     reader.onload = function(e) {
-        const contents = e.target.result;
-        editor.setValue(contents); // Загружаем содержимое в редактор
+        editor.setValue(e.target.result);
     };
     reader.readAsText(file);
 });
