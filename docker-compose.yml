@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  editor:
+    build: .
+    image: go-editor
+    container_name: go-editor
+    ports:
+      - "4490:4490"
+    volumes:
+      - .:/app
+    restart: unless-stopped
